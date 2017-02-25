@@ -24,9 +24,31 @@ public class TileScript : MonoBehaviour {
 		
 	}
 
-    public void Setup(Point gridPos, Vector3 worldPos)
+    public void Setup(Point gridPos, Vector3 worldPos, Transform parent)
     {
         this.GridPosition = gridPos;
         transform.position = worldPos;
+        transform.SetParent(parent);
+
+        
+        //LevelManager lm = GameObject.FindObjectOfType<LevelManager>();
+
+        LevelManager.Instance.Tiles.Add(gridPos, this);
     }
+
+    private void OnMouseOver()
+    {
+        //Debug.Log(GridPosition.X + ", " + GridPosition.Y);
+        if (Input.GetMouseButtonDown(0))
+        {
+            PlaceTower();
+        }
+    }
+
+    private void PlaceTower()
+    {
+        //Debug.Log("Tower place");
+        Instantiate(GameManager.Instance.TowerPrefab, transform.position, Quaternion.identity);
+    }
+
 }

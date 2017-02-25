@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class LevelManager : MonoBehaviour {
+public class LevelManager : Singleton<LevelManager> {
     [SerializeField]
     private GameObject[] tilePrefabs;
     [SerializeField]
     private CameraMovement cameraMovement;
+    [SerializeField]
+    private Transform map;
 
     private Point blueSpawn;
     private Point redSpawn;
@@ -51,6 +53,8 @@ public class LevelManager : MonoBehaviour {
         
     }
 
+
+
     private void CreateLevel()
     {
         //string[] mapData = new string[]
@@ -88,9 +92,9 @@ public class LevelManager : MonoBehaviour {
         TileScript newTile = Instantiate(tilePrefabs[tileIndex]).GetComponent<TileScript>();
         //newTile.transform.position = new Vector3(worldStart.x + TileSize * x, worldStart.y - TileSize * y, 0);
 
-        newTile.Setup(new Point(x, y), new Vector3(worldStart.x + TileSize * x, worldStart.y - TileSize * y, 0));
+        newTile.Setup(new Point(x, y), new Vector3(worldStart.x + TileSize * x, worldStart.y - TileSize * y, 0), map);
 
-        Tiles.Add(new Point(x,y), newTile);
+        //Tiles.Add(new Point(x,y), newTile);
 
         //return newTile.transform.position;
     }
@@ -119,4 +123,6 @@ public class LevelManager : MonoBehaviour {
         Vector3 r_pos = new Vector3(r_xy.x, r_xy.y, Tiles[redSpawn].GetComponent<TileScript>().transform.position.z - 1);
         Instantiate(redPortalPrefab, r_pos, Quaternion.identity);
     }
+
+
 }
