@@ -18,6 +18,10 @@ public class GameManager : Singleton<GameManager> {
 
     //private TowerButton clickedBtn;
 
+    //[SerializeField]
+    //private GameObject[] waypoints;
+
+
     private int currency;
 
     [SerializeField]

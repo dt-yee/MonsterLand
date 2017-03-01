@@ -22,7 +22,20 @@ public class LevelManager : Singleton<LevelManager> {
 
     public Portal StartPortal { get; set; }
 
+    private Stack<Node> path;
 
+    public Stack<Node> Path
+    {
+        get
+        {
+            if(path == null)
+            {
+                GeneratePath();
+            }
+            return new Stack<Node>(new Stack<Node>(path));
+        }
+
+    }
 
     public float TileSize
     {
@@ -131,5 +144,12 @@ public class LevelManager : Singleton<LevelManager> {
         Instantiate(redPortalPrefab, r_pos, Quaternion.identity);
     }
 
+    public void GeneratePath()
+    {
+        path = null;
 
+
+        path.Push(new Node(Tiles[new Point(0, 1)]));
+        path.Push(new Node(Tiles[new Point(0, 0)]));
+    }
 }

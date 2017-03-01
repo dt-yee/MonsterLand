@@ -42,6 +42,6 @@ public class TowerButton : MonoBehaviour {
 
     private void Start()
     {
-        priceText.text = price + "$";
+        priceText.text = Price + "$";
     }
 }

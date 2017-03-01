@@ -4,10 +4,25 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour {
 
+    //[SerializeField]
+    //private GameObject[] waypoints;
+    [SerializeField]
+    private float speed;
+
+    private Stack<Node> path;
+    public Point GridPosition { set; get; }
+    private Vector3 destination;
+
+    private void Update()
+    {
+        Move();
+    }
+
     public void Spawn()
     {
         transform.position = LevelManager.Instance.StartPortal.transform.position;
         StartCoroutine(Scale(new Vector3(0.1f,0.1f), new Vector3(1,1)));
+        SetPath(LevelManager.Instance.Path);
     }
 
 
@@ -23,5 +38,28 @@ public class Monster : MonoBehaviour {
             yield return null;
         }
         transform.localScale = to;
+    }
+
+    private void Move()
+    {
+        transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+        if(transform.position == destination)
+        {
+            if(path != null && path.Count > 0)
+            {
+                GridPosition = path.Peek().GridPosition;
+                destination = path.Pop().WorldPosition;
+            }
+        }
+    }
+
+    private void SetPath(Stack<Node> newPath)
+    {
+        if(newPath != null)
+        {
+            this.path = newPath;
+            GridPosition = path.Peek().GridPosition;
+            destination = path.Pop().WorldPosition;
+        }
     }
 }
