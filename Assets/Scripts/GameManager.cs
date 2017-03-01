@@ -117,6 +117,7 @@ public class GameManager : Singleton<GameManager> {
                 break;
         }
         Monster monster = Pool.GetObject(type).GetComponent<Monster>();
+        monster.GetComponent<SpriteRenderer>().sortingOrder = 10;
         monster.Spawn();
         yield return new WaitForSeconds(2.5f);
     }

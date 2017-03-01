@@ -13,4 +13,17 @@ public struct Point
         this.Y = y;
     }
 
+    public class EqualityComparer : IEqualityComparer<Point>
+    {
+
+        public bool Equals(Point a, Point b)
+        {
+            return a.X == b.X && a.Y == b.Y;
+        }
+
+        public int GetHashCode(Point obj)
+        {
+            return (obj.X + 653) ^ (obj.Y + 257);
+        }
+    }
 }

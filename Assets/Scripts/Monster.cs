@@ -13,6 +13,8 @@ public class Monster : MonoBehaviour {
     public Point GridPosition { set; get; }
     private Vector3 destination;
 
+    public bool IsActive { get; set; }
+
     private void Update()
     {
         Move();
@@ -38,17 +40,27 @@ public class Monster : MonoBehaviour {
             yield return null;
         }
         transform.localScale = to;
+        IsActive = true;
     }
 
     private void Move()
     {
-        transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
-        if(transform.position == destination)
+        //Vector2 d2 = new Vector2(destination.x, destination.y);
+        if (IsActive)
         {
-            if(path != null && path.Count > 0)
+            transform.position = Vector2.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+            //Debug.Log(Time.deltaTime);
+            //Debug.Log(transform.position.x);
+            //Debug.Log(transform.position.y);
+            //Debug.Log(destination.x);
+            //Debug.Log(destination.y);
+            if (transform.position == destination)
             {
-                GridPosition = path.Peek().GridPosition;
-                destination = path.Pop().WorldPosition;
+                if (path != null && path.Count > 0)
+                {
+                    GridPosition = path.Peek().GridPosition;
+                    destination = path.Pop().WorldPosition;
+                }
             }
         }
     }

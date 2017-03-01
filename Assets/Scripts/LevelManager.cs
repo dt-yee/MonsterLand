@@ -32,7 +32,7 @@ public class LevelManager : Singleton<LevelManager> {
             {
                 GeneratePath();
             }
-            return new Stack<Node>(new Stack<Node>(path));
+            return new Stack<Node>(path);
         }
 
     }
@@ -146,10 +146,13 @@ public class LevelManager : Singleton<LevelManager> {
 
     public void GeneratePath()
     {
-        path = null;
-
-
+        path = new Stack<Node>();
+        //Debug.Log(Tiles[new Point(0, 1)].transform.position);
+        //Node n1 = new Node(Tiles[new Point(0, 1)]);
+        //Debug.Log(n1.GridPosition.X);
+        //Debug.Log(n1.GridPosition.Y);
+        //path.Push(n1);
         path.Push(new Node(Tiles[new Point(0, 1)]));
-        path.Push(new Node(Tiles[new Point(0, 0)]));
+        //path.Push(new Node(Tiles[new Point(0, 0)]));
     }
 }
