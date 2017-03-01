@@ -19,6 +19,11 @@ public class LevelManager : Singleton<LevelManager> {
     private GameObject redPortalPrefab;
 
     public Dictionary<Point, TileScript> Tiles { set; get; }
+
+    public Portal StartPortal { get; set; }
+
+
+
     public float TileSize
     {
         get { return tilePrefabs[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x; }
@@ -115,7 +120,9 @@ public class LevelManager : Singleton<LevelManager> {
         b_xy = Tiles[blueSpawn].GetComponent<TileScript>().WorldPosition;
         Vector3 b_pos = new Vector3(b_xy.x, b_xy.y, Tiles[blueSpawn].GetComponent<TileScript>().transform.position.z - 1);
         //Instantiate(bluePortalPrefab, Tiles[blueSpawn].GetComponent<TileScript>().WorldPosition, Quaternion.identity);
-        Instantiate(bluePortalPrefab, b_pos, Quaternion.identity);
+        GameObject tmp = (GameObject)Instantiate(bluePortalPrefab, b_pos, Quaternion.identity);
+        StartPortal = tmp.GetComponent<Portal>();
+        StartPortal.name = "StartPortal";
 
         redSpawn = new Point(11, 5);
         Vector2 r_xy = new Vector2(0, 0);
