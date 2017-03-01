@@ -152,7 +152,13 @@ public class LevelManager : Singleton<LevelManager> {
         //Debug.Log(n1.GridPosition.X);
         //Debug.Log(n1.GridPosition.Y);
         //path.Push(n1);
-        path.Push(new Node(Tiles[new Point(0, 1)]));
-        //path.Push(new Node(Tiles[new Point(0, 0)]));
+        
+               
+        path.Push(new Node(Tiles[new Point(1, 0)]));
+        path.Push(new Node(Tiles[new Point(1, 5)]));
+        path.Push(new Node(Tiles[new Point(3, 5)]));
+        path.Push(new Node(Tiles[new Point(3, 0)]));
+        path.Push(new Node(Tiles[new Point(5, 0)]));
+        path.Push(new Node(Tiles[new Point(5, 5)]));
     }
 }
