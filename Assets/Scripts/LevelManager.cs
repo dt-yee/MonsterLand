@@ -99,7 +99,7 @@ public class LevelManager : Singleton<LevelManager> {
             }
         }
         maxTile = Tiles[new Point(mapX - 1, mapY - 1)].transform.position;
-
+        //Debug.Log("camera");
         cameraMovement.SetLimits(new Vector3(maxTile.x + TileSize, maxTile.y - TileSize));
         SpawnPortals();
     }
@@ -160,5 +160,6 @@ public class LevelManager : Singleton<LevelManager> {
         path.Push(new Node(Tiles[new Point(3, 0)]));
         path.Push(new Node(Tiles[new Point(5, 0)]));
         path.Push(new Node(Tiles[new Point(5, 5)]));
+        path.Push(new Node(Tiles[new Point(11, 5)]));
     }
 }

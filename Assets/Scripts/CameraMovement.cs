@@ -22,6 +22,7 @@ public class CameraMovement : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.W))
         {
+            //Debug.Log("w");
             transform.Translate(Vector3.up * cameraSpeed * Time.deltaTime);
         }
         if (Input.GetKey(KeyCode.A))
