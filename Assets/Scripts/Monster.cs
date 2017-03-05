@@ -43,7 +43,8 @@ public class Monster : MonoBehaviour {
         IsActive = true;
         if (remove)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            Release();
         }
     }
 
@@ -109,5 +110,12 @@ public class Monster : MonoBehaviour {
             //Debug.Log("goal");
             StartCoroutine(Scale(new Vector3(1, 1), new Vector3(0.1f, 0.1f), true));
         }
+    }
+
+    private void Release()
+    {
+        IsActive = false;
+        GridPosition = LevelManager.Instance.BlueSpawn;
+        GameManager.Instance.Pool.ReleaseObject(gameObject);
     }
 }

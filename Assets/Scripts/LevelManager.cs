@@ -43,8 +43,17 @@ public class LevelManager : Singleton<LevelManager> {
 
     }
 
-	// Use this for initialization
-	void Start () {
+    public Point BlueSpawn
+    {
+        get
+        {
+            return blueSpawn;
+        }
+
+    }
+
+    // Use this for initialization
+    void Start () {
         //Point p = new Point(2, 0);
         //Debug.Log(p.X);
         //TestValue(p);
