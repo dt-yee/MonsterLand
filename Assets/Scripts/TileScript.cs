@@ -14,6 +14,8 @@ public class TileScript : MonoBehaviour {
 
     private SpriteRenderer spriteRenderer;
 
+    private Tower myTower;
+
     public Vector2 WorldPosition
     {
         get
@@ -69,9 +71,20 @@ public class TileScript : MonoBehaviour {
             {
 
                 PlaceTower();
+                GameManager.Instance.DeselectTower();
             }
         }
-        
+        else if(!EventSystem.current.IsPointerOverGameObject() && GameManager.Instance.ClickedBtn == null && Input.GetMouseButton(0))
+        {
+            if(myTower != null)
+            {
+                GameManager.Instance.SelectTower(myTower);
+            }
+            else
+            {
+                GameManager.Instance.DeselectTower();
+            }
+        }
     }
 
     private void OnMouseExit()
@@ -87,6 +100,7 @@ public class TileScript : MonoBehaviour {
         GameObject tower = (GameObject)Instantiate(GameManager.Instance.ClickedBtn.TowerPrefab, transform.position, Quaternion.identity);
         tower.GetComponent<SpriteRenderer>().sortingOrder = GridPosition.Y;
         tower.transform.SetParent(transform);
+        this.myTower = tower.transform.GetChild(0).GetComponent<Tower>();
         IsEmpty = false;
         ColorTile(Color.white);
         GameManager.Instance.BuyTower();

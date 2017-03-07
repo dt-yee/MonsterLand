@@ -34,6 +34,8 @@ public class GameManager : Singleton<GameManager> {
     [SerializeField]
     private GameObject waveBtn;
 
+    private Tower selectedTower;
+
     List<Monster> activeMonsters = new List<Monster>();
 
     public ObjectPool Pool { get; set; }
@@ -121,7 +123,7 @@ public class GameManager : Singleton<GameManager> {
 
     private IEnumerator SpawnWave()
     {
-        for (int i = 0; i < wave; i++)
+        for (int i = 0; i < wave*5; i++)
         {
 
             //depends on monster kinds
@@ -156,4 +158,25 @@ public class GameManager : Singleton<GameManager> {
             waveBtn.SetActive(true);
         }
     }
+
+
+    public void SelectTower(Tower tower)
+    {
+        if(selectedTower != null)
+        {
+            selectedTower.Select();
+        }
+        selectedTower = tower;
+        selectedTower.Select();
+    }
+
+    public void DeselectTower()
+    {
+        if(selectedTower != null)
+        {
+            selectedTower.Select();
+        }
+        selectedTower = null;
+    }
+
 }
