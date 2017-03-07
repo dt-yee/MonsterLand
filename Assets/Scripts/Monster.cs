@@ -112,7 +112,7 @@ public class Monster : MonoBehaviour {
         }
     }
 
-    private void Release()
+    public void Release()
     {
         IsActive = false;
         GridPosition = LevelManager.Instance.BlueSpawn;

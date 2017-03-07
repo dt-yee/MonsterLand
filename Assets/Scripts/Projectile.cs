@@ -7,15 +7,40 @@ public class Projectile : MonoBehaviour {
 
     private Tower parent;
 
-	// Use this for initialization
-	void Start () {
+    public Point GridPosition { set; get; }
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
         MoveToTarget();
+        if (gameObject.transform.position.Equals(parent.Target.transform.position))
+        {
+            if(target != null)
+            {
+                Transform healthBarTransform = parent.Target.transform.FindChild("HealthBar");
+                HealthBar healthBar = healthBarTransform.gameObject.GetComponent<HealthBar>();
+                healthBar.currentHealth -= Mathf.Max(parent.Damage);
+                if(healthBar.currentHealth <= 0)
+                {
+                    //Destroy(parent.Target);
+                    parent.Target.GetComponent<Monster>().Release();
+                    GameManager.Instance.Currency += 5;
+                }
+            }
+            //Destroy(gameObject);
+            Release();
+        }
+
 	}
+
+    private void Release()
+    {
+        gameObject.SetActive(false);
+        //GridPosition = new parent.transform.position
+    }
 
     public void Initialize(Tower parent)
     {
@@ -38,6 +63,7 @@ public class Projectile : MonoBehaviour {
         else if (!target.IsActive)
         {
             GameManager.Instance.Pool.ReleaseObject(gameObject);
+            
         }
     }
 }
