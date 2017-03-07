@@ -21,6 +21,7 @@ public class LevelManager : Singleton<LevelManager> {
     public Dictionary<Point, TileScript> Tiles { set; get; }
 
     public Portal StartPortal { get; set; }
+	public Portal EndPortal { get; set; }
 
     private Stack<Node> path;
 
@@ -150,7 +151,9 @@ public class LevelManager : Singleton<LevelManager> {
         Vector2 r_xy = new Vector2(0, 0);
         r_xy = Tiles[redSpawn].GetComponent<TileScript>().WorldPosition;
         Vector3 r_pos = new Vector3(r_xy.x, r_xy.y, Tiles[redSpawn].GetComponent<TileScript>().transform.position.z - 1);
-        Instantiate(redPortalPrefab, r_pos, Quaternion.identity);
+		GameObject tmp1 = (GameObject)Instantiate(redPortalPrefab, r_pos, Quaternion.identity);
+		EndPortal = tmp1.GetComponent<Portal>();
+		EndPortal.name = "EndPortal";
     }
 
     public void GeneratePath()
