@@ -74,4 +74,12 @@ public class Monster : MonoBehaviour {
             destination = path.Pop().WorldPosition;
         }
     }
+
+	private void onTriggerEnter2D(Collider2D other) {
+		if (other.tag == "EndPortal") {
+			//StartCoroutine (Scale (new Vector3 (1, 1), new Vector3 (0.1f, 0.1f), true));
+
+			GameManager.Instance.Lives--;
+		}
+	}
 }

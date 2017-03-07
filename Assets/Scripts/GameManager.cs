@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager> {
 
@@ -23,9 +24,18 @@ public class GameManager : Singleton<GameManager> {
 
 
     private int currency;
+	private int wave = 0;
+	private int lives;
+	private bool gameOver = false;
 
     [SerializeField]
     private Text currencyText;
+
+	[SerializeField]
+	private GameObject gameOverMenu;
+
+	[SerializeField]
+	private Text livesText;
 
     public ObjectPool Pool { get; set; }
 
@@ -50,6 +60,24 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
+	public int Lives
+	{
+		get {
+			return lives;
+		}
+		set {
+			this.lives = value;
+
+			if (lives <= 0) {
+				this.lives = 0;
+				GameOver ();
+			}
+
+			livesText.text = lives.ToString ();
+
+		}
+	}
+
     private void Awake()
     {
         Pool = GetComponent<ObjectPool>();
@@ -57,6 +85,7 @@ public class GameManager : Singleton<GameManager> {
 
     // Use this for initialization
     void Start () {
+		Lives = 1;
         Currency = 5;
 	}
 	
@@ -121,4 +150,20 @@ public class GameManager : Singleton<GameManager> {
         monster.Spawn();
         yield return new WaitForSeconds(2.5f);
     }
+
+	public void GameOver() {
+		if (!gameOver) {
+			gameOver = true;
+			gameOverMenu.SetActive (true);
+		}
+	}
+
+	public void Restart() {
+		Time.timeScale = 1;
+		SceneManager.LoadScene (SceneManager.GetActiveScene ().name); 
+	}
+
+	public void QuitGame() {
+		Application.Quit ();
+	}
 }
