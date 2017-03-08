@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager> {
@@ -26,6 +27,13 @@ public class GameManager : Singleton<GameManager> {
 
     private int wave = 0;
 
+    private bool gameOver = false;
+    [SerializeField]
+    private GameObject gameOverMenu; 
+    private int lives;
+    [SerializeField]
+    private Text livesTxt;
+
     [SerializeField]
     private Text waveTxt;
 
@@ -40,7 +48,22 @@ public class GameManager : Singleton<GameManager> {
 
     public ObjectPool Pool { get; set; }
 
+    public int Lives
+    {
+        get { return lives; }
+        set
+        {
+            this.lives = value;
+            
 
+            if (lives <= 0)
+            {
+                this.lives = 0;
+                GameOver();
+            }
+            livesTxt.text = lives.ToString();
+        }
+    }
     public bool WaveActive
     {
         get
@@ -70,6 +93,8 @@ public class GameManager : Singleton<GameManager> {
         }
     }
 
+
+
     private void Awake()
     {
         Pool = GetComponent<ObjectPool>();
@@ -78,6 +103,8 @@ public class GameManager : Singleton<GameManager> {
     // Use this for initialization
     void Start () {
         Currency = 5;
+        Lives = 10;
+        gameOverMenu.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -153,7 +180,7 @@ public class GameManager : Singleton<GameManager> {
     public void RemoveMonster(Monster monster)
     {
         activeMonsters.Remove(monster);
-        if (!WaveActive)
+        if (!WaveActive && !gameOver)
         {
             waveBtn.SetActive(true);
         }
@@ -179,4 +206,24 @@ public class GameManager : Singleton<GameManager> {
         selectedTower = null;
     }
 
+    public void GameOver()
+    {
+        if (!gameOver)
+        {
+            gameOver = true;
+            gameOverMenu.SetActive(true);
+        }
+    }
+
+    public void Restart()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }

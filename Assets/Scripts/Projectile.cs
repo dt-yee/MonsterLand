@@ -30,8 +30,8 @@ public class Projectile : MonoBehaviour {
                     GameManager.Instance.Currency += 5;
                 }
             }
-            //Destroy(gameObject);
-            Release();
+            Destroy(gameObject);
+           // Release();
         }
 
 	}

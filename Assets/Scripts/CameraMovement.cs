@@ -38,6 +38,12 @@ public class CameraMovement : MonoBehaviour {
             transform.Translate(Vector3.right * cameraSpeed * Time.deltaTime);
         }
 
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        {
+            Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+            transform.Translate(-touchDeltaPosition.x * cameraSpeed, transform.position.y, transform.position.z);
+        }
+
         transform.position =
             new Vector3(Mathf.Clamp(transform.position.x, 0, xMax), Mathf.Clamp(transform.position.y, yMin, 0), -10);
     }
